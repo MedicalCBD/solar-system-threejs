@@ -4,7 +4,8 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Infinite Influence $INF</title>
+    <link rel="icon" type="image/png" href="img/logo.png">
     <style>
         * {
             margin: 0;
@@ -57,6 +58,26 @@
         }
         
         .modal-content::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #00DD00, #00CC00);
+        }
+        
+        /* Scrollbar verde para el roadmap */
+        .roadmap-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .roadmap-content::-webkit-scrollbar-track {
+            background: rgba(0, 100, 50, 0.3);
+            border-radius: 4px;
+        }
+        
+        .roadmap-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #00CC00, #00AA00);
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+        
+        .roadmap-content::-webkit-scrollbar-thumb:hover {
             background: linear-gradient(135deg, #00DD00, #00CC00);
         }
         
@@ -164,10 +185,11 @@
         
         .logo {
             margin-right: 20px;
+            margin-left: -160px;
         }
         
         .logo-img {
-            width: 40px;
+            width: 80px;
             height: 40px;
             border-radius: 8px;
             filter: drop-shadow(0 0 8px rgba(0, 255, 150, 0.6));
@@ -463,6 +485,67 @@
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
             transform: translateY(-2px);
         }
+        
+        /* Roadmap Modal Styles */
+        .roadmap-content {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .roadmap-phase {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 100, 50, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 150, 0.3);
+        }
+        
+        .phase-title {
+            color: #00FF00;
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .phase-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .phase-list li {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 255, 150, 0.2);
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .phase-list li:before {
+            content: "✓";
+            color: #00FF00;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+        
+        .phase-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .phase-description {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0;
+            padding: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -471,12 +554,12 @@
         <div class="header-content">
             <div class="header-left">
                 <div class="logo">
-                    <img src="https://via.placeholder.com/40x40/00CC00/FFFFFF?text=LOGO" alt="Logo" class="logo-img">
+                    <img src="img/logo2.png" alt="Infinite Influence Logo" class="logo-img">
                 </div>
             </div>
             
             <nav class="header-nav">
-                <a href="#" class="nav-link">BUY $COIN</a>
+                <a href="#" class="nav-link">BUY $INF</a>
                 <a href="#" class="nav-link">Twitter</a>
                 <a href="#" class="nav-link">Telegram</a>
             </nav>
@@ -644,14 +727,14 @@
     </div>
 
     <!-- Roadmap Button -->
-    <button class="roadmap-button" onclick="window.open('#', '_blank')">
+    <button class="roadmap-button" onclick="openRoadmapModal()">
         roadmap
     </button>
     
-    <!-- Modal -->
+    <!-- Tweet Modal -->
     <div id="sunModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="close" onclick="closeTweetModal()">&times;</span>
             <h2 class="modal-title" id="modalTitle">Tweet</h2>
             <div id="twitter-timeline-container">
                 <div id="loader" class="loader">
@@ -660,6 +743,61 @@
                 </div>
                 <div id="tweetContent" style="display: none;">
                     <!-- Tweet content will be loaded here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Roadmap Modal -->
+    <div id="roadmapModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRoadmapModal()">&times;</span>
+            <h2 class="modal-title">Infinite Influence $INF</h2>
+            <div class="roadmap-content">
+                <div class="roadmap-phase">
+                    <h3 class="phase-title">Planet System</h3>
+                    <p class="phase-description">
+                        Abstract Chain influencers can apply to get their own planet in Infinite Influence $INF. 
+                        We're also open to other projects having their own planet in our ecosystem. 
+                        Each planet represents a unique influencer or project in our universe.
+                    </p>
+                </div>
+                
+                <div class="roadmap-phase">
+                    <h3 class="phase-title">How to Apply</h3>
+                    <ul class="phase-list">
+                        <li>Send a DM to @InfiniteInfluence on Twitter</li>
+                        <li>Or click the "Apply" button in the sidebar</li>
+                        <li>Only Abstract Chain influencers can apply</li>
+                        <li>Projects can also request their own planet</li>
+                    </ul>
+                </div>
+                
+                <div class="roadmap-phase">
+                    <h3 class="phase-title">100% Airdrop Distribution</h3>
+                    <p class="phase-description">
+                        All funds collected from influencers and projects wanting their own planet in Infinite Influence $INF 
+                        will be distributed as a 100% airdrop to the community. Every penny goes back to the people.
+                    </p>
+                </div>
+                
+                <div class="roadmap-phase">
+                    <h3 class="phase-title">Simple Roadmap</h3>
+                    <ul class="phase-list">
+                        <li>Infinite Influence Launch</li>
+                        <li>Influencer Applications Open</li>
+                        <li>Project Integration</li>
+                        <li>100% Airdrop Distribution</li>
+                    </ul>
+                </div>
+                
+                <div class="roadmap-phase">
+                    <h3 class="phase-title">Why Infinite Influence?</h3>
+                    <p class="phase-description">
+                        We're building the ultimate influencer ecosystem where everyone wins. 
+                        Influencers get their own planet, projects get exposure, and the community gets 100% of the value back.
+                        This is true decentralization - power to the people.
+                    </p>
                 </div>
             </div>
         </div>
@@ -1128,6 +1266,50 @@
             
             document.head.appendChild(script);
         }
+        
+        // Roadmap Modal Functions
+        function openRoadmapModal() {
+            const modal = document.getElementById('roadmapModal');
+            modal.style.display = "block";
+        }
+        
+        function closeRoadmapModal() {
+            const modal = document.getElementById('roadmapModal');
+            modal.style.display = "none";
+        }
+        
+        function closeTweetModal() {
+            const modal = document.getElementById('sunModal');
+            modal.style.display = "none";
+        }
+        
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const sunModal = document.getElementById('sunModal');
+            const roadmapModal = document.getElementById('roadmapModal');
+            
+            if (event.target === sunModal) {
+                sunModal.style.display = "none";
+            }
+            if (event.target === roadmapModal) {
+                roadmapModal.style.display = "none";
+            }
+        }
+        
+        // Close modals with escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const sunModal = document.getElementById('sunModal');
+                const roadmapModal = document.getElementById('roadmapModal');
+                
+                if (sunModal.style.display === "block") {
+                    sunModal.style.display = "none";
+                }
+                if (roadmapModal.style.display === "block") {
+                    roadmapModal.style.display = "none";
+                }
+            }
+        });
     </script>
 </body>
 </html>
