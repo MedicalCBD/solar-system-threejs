@@ -53,6 +53,52 @@ const textureLoader = new THREE.TextureLoader()
 // scene background
 renderer.setClearColor('#111111')
 
+// Create starfield with square stars
+function createStarfield() {
+    const starGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5) // Square stars
+    const starMaterial = new THREE.MeshBasicMaterial({ 
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.8
+    })
+    
+    const starGroup = new THREE.Group()
+    
+    // Create 1000 stars
+    for (let i = 0; i < 1000; i++) {
+        const star = new THREE.Mesh(starGeometry, starMaterial)
+        
+        // Random position in a large sphere around the scene
+        const radius = 500 + Math.random() * 500 // Between 500 and 1000 units from center
+        const theta = Math.random() * Math.PI * 2 // Random angle around Y axis
+        const phi = Math.acos(Math.random() * 2 - 1) // Random angle from Y axis
+        
+        star.position.x = radius * Math.sin(phi) * Math.cos(theta)
+        star.position.y = radius * Math.cos(phi)
+        star.position.z = radius * Math.sin(phi) * Math.sin(theta)
+        
+        // Random rotation for variety
+        star.rotation.x = Math.random() * Math.PI
+        star.rotation.y = Math.random() * Math.PI
+        star.rotation.z = Math.random() * Math.PI
+        
+        // Random scale for different star sizes
+        const scale = 0.5 + Math.random() * 1.5
+        star.scale.set(scale, scale, scale)
+        
+        // Random brightness
+        star.material.opacity = 0.3 + Math.random() * 0.7
+        
+        starGroup.add(star)
+    }
+    
+    scene.add(starGroup)
+    return starGroup
+}
+
+// Create the starfield
+const starfield = createStarfield()
+
 
 // sun
 const sunGeo = new THREE.SphereGeometry(16, 30, 30)
@@ -351,6 +397,9 @@ function animate () {
     uranus.obj.rotateY(0.0002)
     neptune.obj.rotateY(0.00005)
     pluto.obj.rotateY(0.000035)
+
+    // Starfield rotation for universe movement effect
+    starfield.rotateY(0.0001)
 
     renderer.render(scene, camera)
 }
