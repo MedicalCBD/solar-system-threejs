@@ -1,0 +1,1133 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, rgba(0, 50, 0, 0.9) 0%, rgba(0, 100, 50, 0.8) 100%);
+            color: white;
+            margin: 0.5% auto;
+            padding: 30px;
+            border: none;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 255, 150, 0.6);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+        
+        /* Scrollbar verde para el modal */
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .modal-content::-webkit-scrollbar-track {
+            background: rgba(0, 100, 50, 0.3);
+            border-radius: 4px;
+        }
+        
+        .modal-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #00CC00, #00AA00);
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+        
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #00DD00, #00CC00);
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+        }
+        
+        .modal-title {
+            color: #00FF00;
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        #twitter-timeline-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .twitter-timeline {
+            display: inline-block;
+        }
+        
+
+        
+
+        
+        /* Cursor styles for clickable objects */
+        .clickable-cursor {
+            cursor: pointer;
+        }
+        
+        /* Header styles */
+        .header {
+            position: fixed;
+            top: 5px;
+            left: 50px;
+            right: 50px;
+            background: linear-gradient(135deg, rgba(0, 50, 0, 0.9) 0%, rgba(0, 100, 50, 0.8) 50%, rgba(0, 150, 75, 0.9) 100%);
+            color: white;
+            padding: 15px 0;
+            z-index: 999;
+            box-shadow: 0 2px 20px rgba(0, 255, 0, 0.2);
+            border: 2px solid rgba(0, 255, 150, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 15px;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        .header-title {
+            font-family: 'Arial', sans-serif;
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00ff00, #00cc00, #009900);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .header-subtitle {
+            font-size: 14px;
+            color: #cccccc;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .header-info {
+            text-align: right;
+            font-size: 12px;
+            color: #888888;
+        }
+        
+        .header-info strong {
+            color: #00ffff;
+        }
+        
+        /* Logo styles */
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            margin-right: 20px;
+        }
+        
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            filter: drop-shadow(0 0 8px rgba(0, 255, 150, 0.6));
+        }
+        
+        /* Navigation styles */
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .nav-link:hover {
+            color: #90EE90;
+            text-shadow: 0 0 10px rgba(144, 238, 144, 0.5);
+        }
+        
+        /* Moon Rankings Sidebar */
+        .moon-rankings-sidebar {
+            position: fixed;
+            left: 20px;
+            top: 100px;
+            width: 300px;
+            height: 828px;
+            background: linear-gradient(135deg, rgba(0, 50, 0, 0.9) 0%, rgba(0, 100, 50, 0.8) 100%);
+            border-right: 2px solid rgba(0, 255, 150, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 100;
+            overflow-y: hidden;
+            box-shadow: 2px 0 20px rgba(0, 255, 0, 0.2);
+            border-radius: 15px;
+        }
+        
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-bottom: 1px solid rgba(0, 255, 150, 0.3);
+            background: rgba(0, 100, 50, 0.3);
+        }
+        
+        .sidebar-icon {
+            font-size: 18px;
+            filter: drop-shadow(0 0 5px rgba(0, 255, 0, 0.5));
+        }
+        
+        .sidebar-title {
+            color: #00FF00;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .sidebar-content {
+            padding: 15px;
+        }
+        
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: rgba(0, 100, 50, 0.2);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 150, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .ranking-item .ranking-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-left: 20px;
+        }
+        
+        .ranking-item:hover {
+            background: rgba(0, 150, 75, 0.3);
+            border-color: rgba(0, 255, 150, 0.5);
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+        }
+        
+        .ranking-item.promoted {
+            background: rgba(0, 150, 75, 0.4);
+            border-color: rgba(255, 215, 0, 0.6);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+        
+        .ranking-item.promoted:hover {
+            background: rgba(0, 200, 100, 0.5);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        .ranking-number {
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            min-width: 25px;
+            text-align: center;
+            margin-right: 8px;
+        }
+        
+        .ranking-icon {
+            font-size: 24px;
+            min-width: 30px;
+            text-align: center;
+            filter: drop-shadow(0 0 3px rgba(0, 255, 0, 0.3));
+        }
+        
+        .ranking-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .ranking-name {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .score-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
+        }
+        
+        .score-label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #CCCCCC;
+            font-size: 10px;
+            font-weight: 500;
+        }
+        
+        .score-icon {
+            font-size: 8px;
+        }
+        
+        .score-value {
+            color: #00FF00;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+        
+        .promoted-label {
+            position: absolute;
+            top: 5px;
+            right: 8px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-shadow: none;
+            box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+        
+        /* Apply Button Styles */
+        .apply-button-container {
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            margin-top: 5px;
+        }
+        
+        .apply-button {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .apply-button:hover {
+            background: linear-gradient(135deg, #FFED4E, #FFD700);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .apply-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .apply-button:hover::before {
+            left: 100%;
+        }
+        
+        .clickable {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .clickable:hover {
+            background: rgba(0, 200, 100, 0.5) !important;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.6) !important;
+            transform: scale(1.02);
+        }
+        
+        /* Loader styles */
+        .loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            flex-direction: column;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #1da1f2;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loader-text {
+            color: #666;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+        
+        /* Roadmap Button */
+        .roadmap-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #00CC00, #00AA00);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+            z-index: 1000;
+        }
+        
+        .roadmap-button:hover {
+            background: linear-gradient(135deg, #00DD00, #00CC00);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <div class="logo">
+                    <img src="https://via.placeholder.com/40x40/00CC00/FFFFFF?text=LOGO" alt="Logo" class="logo-img">
+                </div>
+            </div>
+            
+            <nav class="header-nav">
+                <a href="#" class="nav-link">BUY $COIN</a>
+                <a href="#" class="nav-link">Twitter</a>
+                <a href="#" class="nav-link">Telegram</a>
+            </nav>
+            
+
+        </div>
+    </header>
+    
+    <!-- Moon Rankings Sidebar -->
+    <div class="moon-rankings-sidebar">
+        <div class="sidebar-header">
+            <h3 class="sidebar-title">Influencers Rankings</h3>
+            <span class="sidebar-icon">🌙</span>
+        </div>
+        <div class="sidebar-content">
+            <div class="ranking-item clickable" onclick="openSunModal()">
+                <div class="ranking-number">1.</div>
+                <div class="ranking-info">
+                    <div class="ranking-name">@Abstract</div>
+                </div>
+                <div class="score-section">
+                    <div class="score-label">
+                        SCORE
+                    </div>
+                    <div class="score-value">100/100</div>
+                </div>
+            </div>
+            
+            <div class="ranking-item clickable" onclick="openLucaNetzModal()">
+                <div class="ranking-number">2.</div>
+                <div class="ranking-info">
+                    <div class="ranking-name">@LucaNetz</div>
+                </div>
+                <div class="score-section">
+                    <div class="score-label">
+                        SCORE
+                    </div>
+                    <div class="score-value">98/100</div>
+                </div>
+            </div>
+            
+            <div class="ranking-item clickable" onclick="openCygaarModal()">
+                <div class="ranking-number">3.</div>
+                <div class="ranking-info">
+                    <div class="ranking-name">@0xCygaar</div>
+                </div>
+                <div class="score-section">
+                    <div class="score-label">
+                        SCORE
+                    </div>
+                    <div class="score-value">95/100</div>
+                </div>
+            </div>
+            
+            <div class="ranking-item clickable" onclick="openPhinModal()">
+                <div class="ranking-number">4.</div>
+                <div class="ranking-info">
+                    <div class="ranking-name">@Phin_totten</div>
+                </div>
+                <div class="score-section">
+                    <div class="score-label">
+                        SCORE
+                    </div>
+                    <div class="score-value">92/100</div>
+                </div>
+            </div>
+            
+            <div class="ranking-item clickable" onclick="openMichaelModal()">
+                <div class="ranking-number">5.</div>
+                <div class="ranking-info">
+                    <div class="ranking-name">@CashBowie</div>
+                </div>
+                <div class="score-section">
+                    <div class="score-label">
+                        SCORE
+                    </div>
+                    <div class="score-value">90/100</div>
+                </div>
+            </div>
+            
+            <div class="ranking-item clickable" onclick="openAbruzucelModal()">
+                <div class="ranking-number">6.</div>
+                <div class="ranking-info">
+                    <div class="ranking-name">@abruzucel</div>
+                </div>
+                <div class="score-section">
+                    <div class="score-label">
+                        SCORE
+                    </div>
+                    <div class="score-value">88/100</div>
+                </div>
+            </div>
+            
+            <div class="ranking-item clickable" onclick="openAdrianModal()">
+                <div class="ranking-number">7.</div>
+                <div class="ranking-info">
+                    <div class="ranking-name">@adrianslai</div>
+                </div>
+                <div class="score-section">
+                    <div class="score-label">
+                        SCORE
+                    </div>
+                    <div class="score-value">85/100</div>
+                </div>
+            </div>
+            
+            <div class="ranking-item clickable" onclick="openJarrodModal()">
+                <div class="ranking-number">8.</div>
+                <div class="ranking-info">
+                    <div class="ranking-name">@jarrodWattsDev</div>
+                </div>
+                <div class="score-section">
+                    <div class="score-label">
+                        SCORE
+                    </div>
+                    <div class="score-value">82/100</div>
+                </div>
+            </div>
+            
+            <div class="ranking-item clickable" onclick="openHedgeModal()">
+                <div class="ranking-number">9.</div>
+                <div class="ranking-info">
+                    <div class="ranking-name">@Hedgeguin</div>
+                </div>
+                <div class="score-section">
+                    <div class="score-label">
+                        SCORE
+                    </div>
+                    <div class="score-value">80/100</div>
+                </div>
+            </div>
+            
+            <div class="ranking-item clickable" onclick="openCoffeeModal()">
+                <div class="ranking-number">10.</div>
+                <div class="ranking-info">
+                    <div class="ranking-name">@coffeexcoin</div>
+                </div>
+                <div class="score-section">
+                    <div class="score-label">
+                        SCORE
+                    </div>
+                    <div class="score-value">78/100</div>
+                </div>
+            </div>
+            
+            <div class="ranking-item clickable" onclick="openMasonModal()">
+                <div class="ranking-number">11.</div>
+                <div class="ranking-info">
+                    <div class="ranking-name">@masoncags</div>
+                </div>
+                <div class="score-section">
+                    <div class="score-label">
+                        SCORE
+                    </div>
+                    <div class="score-value">75/100</div>
+                </div>
+            </div>
+            
+            <div class="apply-button-container">
+                <button class="apply-button" onclick="window.open('https://twitter.com', '_blank')">
+                    Apply
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap Button -->
+    <button class="roadmap-button" onclick="window.open('#', '_blank')">
+        roadmap
+    </button>
+    
+    <!-- Modal -->
+    <div id="sunModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="modal-title" id="modalTitle">Tweet</h2>
+            <div id="twitter-timeline-container">
+                <div id="loader" class="loader">
+                    <div class="spinner"></div>
+                    <div class="loader-text">Loading tweet...</div>
+                </div>
+                <div id="tweetContent" style="display: none;">
+                    <!-- Tweet content will be loaded here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/scripts.js" type="module"></script>
+    <script>
+        function openSunModal() {
+            const abstractTweet = '<blockquote class="twitter-tweet" data-dnt="true" align="center" data-conversation="none"><p lang="en" dir="ltr">Hello to Abstract <a href="https://t.co/R0XAQy31t1">pic.twitter.com/R0XAQy31t1</a></p>&mdash; Abstract (@AbstractChain) <a href="https://twitter.com/AbstractChain/status/1950582215156363265?ref_src=twsrc%5Etfw">July 30, 2025</a></blockquote>';
+            
+            const modal = document.getElementById('sunModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const tweetContent = document.getElementById('tweetContent');
+            const loader = document.getElementById('loader');
+            
+            modalTitle.textContent = 'Abstract Tweet';
+            tweetContent.innerHTML = abstractTweet;
+            
+            // Show loader and hide tweet content initially
+            loader.style.display = "flex";
+            tweetContent.style.display = "none";
+            modal.style.display = "block";
+            
+            // Remove existing script if any
+            const existingScript = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
+            if (existingScript) {
+                existingScript.remove();
+            }
+            
+            // Create and append Twitter widget script
+            const script = document.createElement('script');
+            script.src = 'https://platform.twitter.com/widgets.js';
+            script.async = true;
+            script.charset = 'utf-8';
+            
+            // Add event listener to detect when Twitter widget is loaded
+            script.onload = function() {
+                // Wait a bit for Twitter to render the widget
+                setTimeout(() => {
+                    if (loader && tweetContent) {
+                        loader.style.display = "none";
+                        tweetContent.style.display = "block";
+                    }
+                }, 2500); // Wait 2.5 seconds for Twitter to render
+            };
+            
+            document.head.appendChild(script);
+        }
+        
+        function openLucaNetzModal() {
+            const lucaNetzTweet = '<blockquote class="twitter-tweet" data-dnt="true" align="center"><p lang="en" dir="ltr"><a href="https://twitter.com/search?q=%24PENGU&amp;src=ctag&amp;ref_src=twsrc%5Etfw">$PENGU</a> &amp; Pudgy Penguin NFT ETF.<br><br>First of its kind.<br><br>History 🫡 <a href="https://t.co/pFoD8LsnJI">pic.twitter.com/pFoD8LsnJI</a></p>&mdash; Luca Netz 🐧✳️ (@LucaNetz) <a href="https://twitter.com/LucaNetz/status/1902744528328527925?ref_src=twsrc%5Etfw">March 20, 2025</a></blockquote>';
+            
+            const modal = document.getElementById('sunModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const tweetContent = document.getElementById('tweetContent');
+            const loader = document.getElementById('loader');
+            
+            modalTitle.textContent = 'LucaNetz Tweet';
+            tweetContent.innerHTML = lucaNetzTweet;
+            
+            // Show loader and hide tweet content initially
+            loader.style.display = "flex";
+            tweetContent.style.display = "none";
+            modal.style.display = "block";
+            
+            // Remove existing script if any
+            const existingScript = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
+            if (existingScript) {
+                existingScript.remove();
+            }
+            
+            // Create and append Twitter widget script
+            const script = document.createElement('script');
+            script.src = 'https://platform.twitter.com/widgets.js';
+            script.async = true;
+            script.charset = 'utf-8';
+            
+            // Add event listener to detect when Twitter widget is loaded
+            script.onload = function() {
+                // Wait a bit for Twitter to render the widget
+                setTimeout(() => {
+                    if (loader && tweetContent) {
+                        loader.style.display = "none";
+                        tweetContent.style.display = "block";
+                    }
+                }, 2500); // Wait 2.5 seconds for Twitter to render
+            };
+            
+            document.head.appendChild(script);
+        }
+        
+        function openCygaarModal() {
+            const cygaarTweet = '<blockquote class="twitter-tweet" data-dnt="true" align="center"><p lang="en" dir="ltr">it&#39;s penguin season <a href="https://t.co/Sg04OeQKku">pic.twitter.com/Sg04OeQKku</a></p>&mdash; cygaar (@0xCygaar) <a href="https://twitter.com/0xCygaar/status/1868300863401517395?ref_src=twsrc%5Etfw">December 15, 2024</a></blockquote>';
+            
+            const modal = document.getElementById('sunModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const tweetContent = document.getElementById('tweetContent');
+            const loader = document.getElementById('loader');
+            
+            modalTitle.textContent = '0xCygaar Tweet';
+            tweetContent.innerHTML = cygaarTweet;
+            
+            // Show loader and hide tweet content initially
+            loader.style.display = "flex";
+            tweetContent.style.display = "none";
+            modal.style.display = "block";
+            
+            // Remove existing script if any
+            const existingScript = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
+            if (existingScript) {
+                existingScript.remove();
+            }
+            
+            // Create and append Twitter widget script
+            const script = document.createElement('script');
+            script.src = 'https://platform.twitter.com/widgets.js';
+            script.async = true;
+            script.charset = 'utf-8';
+            
+            // Add event listener to detect when Twitter widget is loaded
+            script.onload = function() {
+                // Wait a bit for Twitter to render the widget
+                setTimeout(() => {
+                    if (loader && tweetContent) {
+                        loader.style.display = "none";
+                        tweetContent.style.display = "block";
+                    }
+                }, 2500); // Wait 2.5 seconds for Twitter to render
+            };
+            
+            document.head.appendChild(script);
+        }
+        
+        function openPhinModal() {
+            const phinTweet = '<blockquote class="twitter-tweet" data-dnt="true" align="center"><p lang="en" dir="ltr">I am the marketing wizard now<br><br>🪄 <a href="https://t.co/NCHvn3BRVu">pic.twitter.com/NCHvn3BRVu</a></p>&mdash; Phin (@Phin_totten) <a href="https://twitter.com/Phin_totten/status/1899459600417452405?ref_src=twsrc%5Etfw">March 11, 2025</a></blockquote>';
+            
+            const modal = document.getElementById('sunModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const tweetContent = document.getElementById('tweetContent');
+            const loader = document.getElementById('loader');
+            
+            modalTitle.textContent = 'Phin_totten Tweet';
+            tweetContent.innerHTML = phinTweet;
+            
+            // Show loader and hide tweet content initially
+            loader.style.display = "flex";
+            tweetContent.style.display = "none";
+            modal.style.display = "block";
+            
+            // Remove existing script if any
+            const existingScript = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
+            if (existingScript) {
+                existingScript.remove();
+            }
+            
+            // Create and append Twitter widget script
+            const script = document.createElement('script');
+            script.src = 'https://platform.twitter.com/widgets.js';
+            script.async = true;
+            script.charset = 'utf-8';
+            
+            // Add event listener to detect when Twitter widget is loaded
+            script.onload = function() {
+                // Wait a bit for Twitter to render the widget
+                setTimeout(() => {
+                    if (loader && tweetContent) {
+                        loader.style.display = "none";
+                        tweetContent.style.display = "block";
+                    }
+                }, 2500); // Wait 2.5 seconds for Twitter to render
+            };
+            
+            document.head.appendChild(script);
+        }
+        
+        function openCoffeeModal() {
+            const coffeeTweet = '<blockquote class="twitter-tweet" data-dnt="true" align="center"><p lang="en" dir="ltr">Can\'t get liquidated if you aren\'t leveraged.<br><br>Comfy in spot for real. <a href="https://t.co/orr2Qz2Zej">pic.twitter.com/orr2Qz2Zej</a></p>&mdash; coffee (☕️,☕️) (@coffeexcoin) <a href="https://twitter.com/coffeexcoin/status/1952160689298006444?ref_src=twsrc%5Etfw">August 4, 2025</a></blockquote>';
+            
+            const modal = document.getElementById('sunModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const tweetContent = document.getElementById('tweetContent');
+            const loader = document.getElementById('loader');
+            
+            modalTitle.textContent = 'coffeexcoin Tweet';
+            tweetContent.innerHTML = coffeeTweet;
+            
+            // Show loader and hide tweet content initially
+            loader.style.display = "flex";
+            tweetContent.style.display = "none";
+            modal.style.display = "block";
+            
+            // Remove existing script if any
+            const existingScript = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
+            if (existingScript) {
+                existingScript.remove();
+            }
+            
+            // Create and append Twitter widget script
+            const script = document.createElement('script');
+            script.src = 'https://platform.twitter.com/widgets.js';
+            script.async = true;
+            script.charset = 'utf-8';
+            
+            // Add event listener to detect when Twitter widget is loaded
+            script.onload = function() {
+                // Wait a bit for Twitter to render the widget
+                setTimeout(() => {
+                    if (loader && tweetContent) {
+                        loader.style.display = "none";
+                        tweetContent.style.display = "block";
+                    }
+                }, 2500); // Wait 2.5 seconds for Twitter to render
+            };
+            
+            document.head.appendChild(script);
+        }
+        
+        function openAbruzucelModal() {
+            const abruzucelTweet = '<blockquote class="twitter-tweet" data-dnt="true" align="center"><p lang="en" dir="ltr">abstract stream??? <a href="https://t.co/Le3gIjmrHE">pic.twitter.com/Le3gIjmrHE</a></p>&mdash; Abril (@abruzuc) <a href="https://twitter.com/abruzuc/status/1884696608647909791?ref_src=twsrc%5Etfw">January 29, 2025</a></blockquote>';
+            
+            const modal = document.getElementById('sunModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const tweetContent = document.getElementById('tweetContent');
+            const loader = document.getElementById('loader');
+            
+            modalTitle.textContent = 'abruzucel Tweet';
+            tweetContent.innerHTML = abruzucelTweet;
+            
+            // Show loader and hide tweet content initially
+            loader.style.display = "flex";
+            tweetContent.style.display = "none";
+            modal.style.display = "block";
+            
+            // Remove existing script if any
+            const existingScript = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
+            if (existingScript) {
+                existingScript.remove();
+            }
+            
+            // Create and append Twitter widget script
+            const script = document.createElement('script');
+            script.src = 'https://platform.twitter.com/widgets.js';
+            script.async = true;
+            script.charset = 'utf-8';
+            
+            // Add event listener to detect when Twitter widget is loaded
+            script.onload = function() {
+                // Wait a bit for Twitter to render the widget
+                setTimeout(() => {
+                    if (loader && tweetContent) {
+                        loader.style.display = "none";
+                        tweetContent.style.display = "block";
+                    }
+                }, 2500); // Wait 2.5 seconds for Twitter to render
+            };
+            
+            document.head.appendChild(script);
+        }
+        
+        function openAdrianModal() {
+            const adrianTweet = '<blockquote class="twitter-tweet" data-dnt="true" align="center"><p lang="en" dir="ltr">HAPPY ABSTRACT AUGUST TO THOSE WHO CELEBRATE <a href="https://t.co/tzVFNGpavQ">https://t.co/tzVFNGpavQ</a></p>&mdash; Adrian (@adrianslai) <a href="https://twitter.com/adrianslai/status/1951318819336487024?ref_src=twsrc%5Etfw">August 1, 2025</a></blockquote>';
+            
+            const modal = document.getElementById('sunModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const tweetContent = document.getElementById('tweetContent');
+            const loader = document.getElementById('loader');
+            
+            modalTitle.textContent = 'adrianslai Tweet';
+            tweetContent.innerHTML = adrianTweet;
+            
+            // Show loader and hide tweet content initially
+            loader.style.display = "flex";
+            tweetContent.style.display = "none";
+            modal.style.display = "block";
+            
+            // Remove existing script if any
+            const existingScript = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
+            if (existingScript) {
+                existingScript.remove();
+            }
+            
+            // Create and append Twitter widget script
+            const script = document.createElement('script');
+            script.src = 'https://platform.twitter.com/widgets.js';
+            script.async = true;
+            script.charset = 'utf-8';
+            
+            // Add event listener to detect when Twitter widget is loaded
+            script.onload = function() {
+                // Wait a bit for Twitter to render the widget
+                setTimeout(() => {
+                    if (loader && tweetContent) {
+                        loader.style.display = "none";
+                        tweetContent.style.display = "block";
+                    }
+                }, 2500); // Wait 2.5 seconds for Twitter to render
+            };
+            
+            document.head.appendChild(script);
+        }
+        
+        function openJarrodModal() {
+            const jarrodTweet = '<blockquote class="twitter-tweet" data-dnt="true" align="center"><p lang="en" dir="ltr">You know I had to do it to em <a href="https://t.co/hPMaDfhC4M">pic.twitter.com/hPMaDfhC4M</a></p>&mdash; Jarrod Watts (@jarrodWattsDev) <a href="https://twitter.com/jarrodWattsDev/status/1864812201409962373?ref_src=twsrc%5Etfw">December 5, 2024</a></blockquote>';
+            
+            const modal = document.getElementById('sunModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const tweetContent = document.getElementById('tweetContent');
+            const loader = document.getElementById('loader');
+            
+            modalTitle.textContent = 'jarrodWattsDev Tweet';
+            tweetContent.innerHTML = jarrodTweet;
+            
+            // Show loader and hide tweet content initially
+            loader.style.display = "flex";
+            tweetContent.style.display = "none";
+            modal.style.display = "block";
+            
+            // Remove existing script if any
+            const existingScript = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
+            if (existingScript) {
+                existingScript.remove();
+            }
+            
+            // Create and append Twitter widget script
+            const script = document.createElement('script');
+            script.src = 'https://platform.twitter.com/widgets.js';
+            script.async = true;
+            script.charset = 'utf-8';
+            
+            // Add event listener to detect when Twitter widget is loaded
+            script.onload = function() {
+                // Wait a bit for Twitter to render the widget
+                setTimeout(() => {
+                    if (loader && tweetContent) {
+                        loader.style.display = "none";
+                        tweetContent.style.display = "block";
+                    }
+                }, 2500); // Wait 2.5 seconds for Twitter to render
+            };
+            
+            document.head.appendChild(script);
+        }
+        
+        function openHedgeModal() {
+            const hedgeTweet = '<blockquote class="twitter-tweet" data-dnt="true" align="center"><p lang="en" dir="ltr">Merry Absmas ✳️<br><br>2025 is the year where REAL users, cracked builders and entrepreneurs run shit onchain. <br><br>Abstract&#39;s Panoramic Governance Will Make Crypto Great Again<br><br>The people&#39;s chain is coming,<br>!soon <a href="https://t.co/q9PH1QTbVi">pic.twitter.com/q9PH1QTbVi</a></p>&mdash; Hedge 🐧 (@Hedgeguin) <a href="https://twitter.com/Hedgeguin/status/1871973689174216725?ref_src=twsrc%5Etfw">December 25, 2024</a></blockquote>';
+            
+            const modal = document.getElementById('sunModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const tweetContent = document.getElementById('tweetContent');
+            const loader = document.getElementById('loader');
+            
+            modalTitle.textContent = 'Hedgeguin Tweet';
+            tweetContent.innerHTML = hedgeTweet;
+            
+            // Show loader and hide tweet content initially
+            loader.style.display = "flex";
+            tweetContent.style.display = "none";
+            modal.style.display = "block";
+            
+            // Remove existing script if any
+            const existingScript = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
+            if (existingScript) {
+                existingScript.remove();
+            }
+            
+            // Create and append Twitter widget script
+            const script = document.createElement('script');
+            script.src = 'https://platform.twitter.com/widgets.js';
+            script.async = true;
+            script.charset = 'utf-8';
+            
+            // Add event listener to detect when Twitter widget is loaded
+            script.onload = function() {
+                // Wait a bit for Twitter to render the widget
+                setTimeout(() => {
+                    if (loader && tweetContent) {
+                        loader.style.display = "none";
+                        tweetContent.style.display = "block";
+                    }
+                }, 2500); // Wait 2.5 seconds for Twitter to render
+            };
+            
+            document.head.appendChild(script);
+        }
+        
+        function openMichaelModal() {
+            const michaelTweet = '<blockquote class="twitter-tweet" data-dnt="true" align="center" data-conversation="none"><p lang="en" dir="ltr">Abstract might actually save ETH. <a href="https://t.co/ZXeBAKJd4u">pic.twitter.com/ZXeBAKJd4u</a></p>&mdash; Michael Lee (@CashBowie) <a href="https://twitter.com/CashBowie/status/1880017523472757018?ref_src=twsrc%5Etfw">January 16, 2025</a></blockquote>';
+            
+            const modal = document.getElementById('sunModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const tweetContent = document.getElementById('tweetContent');
+            const loader = document.getElementById('loader');
+            
+            modalTitle.textContent = 'CashBowie Tweet';
+            tweetContent.innerHTML = michaelTweet;
+            
+            // Show loader and hide tweet content initially
+            loader.style.display = "flex";
+            tweetContent.style.display = "none";
+            modal.style.display = "block";
+            
+            // Remove existing script if any
+            const existingScript = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
+            if (existingScript) {
+                existingScript.remove();
+            }
+            
+            // Create and append Twitter widget script
+            const script = document.createElement('script');
+            script.src = 'https://platform.twitter.com/widgets.js';
+            script.async = true;
+            script.charset = 'utf-8';
+            
+            // Add event listener to detect when Twitter widget is loaded
+            script.onload = function() {
+                // Wait a bit for Twitter to render the widget
+                setTimeout(() => {
+                    if (loader && tweetContent) {
+                        loader.style.display = "none";
+                        tweetContent.style.display = "block";
+                    }
+                }, 2500); // Wait 2.5 seconds for Twitter to render
+            };
+            
+            document.head.appendChild(script);
+        }
+        
+        function openMasonModal() {
+            const masonTweet = '<blockquote class="twitter-tweet" data-dnt="true" align="center"><p lang="en" dir="ltr">Dare to dream <a href="https://t.co/lxmrxuQul0">pic.twitter.com/lxmrxuQul0</a></p>&mdash; Mason (@masoncags) <a href="https://twitter.com/masoncags/status/1922228923481436665?ref_src=twsrc%5Etfw">May 13, 2025</a></blockquote>';
+            
+            const modal = document.getElementById('sunModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const tweetContent = document.getElementById('tweetContent');
+            const loader = document.getElementById('loader');
+            
+            modalTitle.textContent = 'masoncags Tweet';
+            tweetContent.innerHTML = masonTweet;
+            
+            // Show loader and hide tweet content initially
+            loader.style.display = "flex";
+            tweetContent.style.display = "none";
+            modal.style.display = "block";
+            
+            // Remove existing script if any
+            const existingScript = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
+            if (existingScript) {
+                existingScript.remove();
+            }
+            
+            // Create and append Twitter widget script
+            const script = document.createElement('script');
+            script.src = 'https://platform.twitter.com/widgets.js';
+            script.async = true;
+            script.charset = 'utf-8';
+            
+            // Add event listener to detect when Twitter widget is loaded
+            script.onload = function() {
+                // Wait a bit for Twitter to render the widget
+                setTimeout(() => {
+                    if (loader && tweetContent) {
+                        loader.style.display = "none";
+                        tweetContent.style.display = "block";
+                    }
+                }, 2500); // Wait 2.5 seconds for Twitter to render
+            };
+            
+            document.head.appendChild(script);
+        }
+    </script>
+</body>
+</html>
