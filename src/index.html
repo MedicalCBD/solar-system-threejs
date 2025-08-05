@@ -27,7 +27,7 @@
         .modal-content {
             background: linear-gradient(135deg, rgba(0, 50, 0, 0.9) 0%, rgba(0, 100, 50, 0.8) 100%);
             color: white;
-            margin: 0.5% auto;
+            margin: 5% auto;
             padding: 30px;
             border: none;
             border-radius: 10px;
@@ -78,6 +78,26 @@
         }
         
         .roadmap-content::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #00DD00, #00CC00);
+        }
+        
+        /* Scrollbar verde para el modal de airdrop */
+        .airdrop-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .airdrop-content::-webkit-scrollbar-track {
+            background: rgba(0, 100, 50, 0.3);
+            border-radius: 4px;
+        }
+        
+        .airdrop-content::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #00CC00, #00AA00);
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+        
+        .airdrop-content::-webkit-scrollbar-thumb:hover {
             background: linear-gradient(135deg, #00DD00, #00CC00);
         }
         
@@ -742,7 +762,7 @@
             <div class="ranking-item clickable" onclick="openAbruzucelModal()">
                 <div class="ranking-number">6.</div>
                 <div class="ranking-info">
-                    <div class="ranking-name">@abruzucel</div>
+                    <div class="ranking-name">@abruzuc</div>
                 </div>
                 <div class="score-section">
                     <div class="score-label">
@@ -911,7 +931,7 @@
                 <div class="airdrop-container">
                     <div class="airdrop-stats">
                         <h3 class="stats-title">Funds Collected</h3>
-                        <div class="stats-amount">0.113 ETH</div>
+                        <div class="stats-amount">0.05 ETH</div>
                         <div class="stats-description">Total collected from influencer applications</div>
                     </div>
                     
@@ -1163,7 +1183,7 @@
             const tweetContent = document.getElementById('tweetContent');
             const loader = document.getElementById('loader');
             
-            modalTitle.textContent = 'abruzucel Tweet';
+            modalTitle.textContent = 'Abruzuc Tweet';
             tweetContent.innerHTML = abruzucelTweet;
             
             // Show loader and hide tweet content initially
