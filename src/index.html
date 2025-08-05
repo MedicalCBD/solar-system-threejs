@@ -546,6 +546,105 @@
             margin: 0;
             padding: 10px 0;
         }
+        
+        /* Airdrop Modal Styles */
+        .airdrop-content {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .airdrop-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .airdrop-stats {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(0, 100, 50, 0.2) 0%, rgba(0, 150, 75, 0.1) 100%);
+            border-radius: 15px;
+            border: 2px solid rgba(0, 255, 150, 0.4);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+        }
+        
+        .stats-title {
+            color: #00FF00;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .stats-amount {
+            color: #00FFFF;
+            font-family: Arial, sans-serif;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+        }
+        
+        .stats-description {
+            color: #CCCCCC;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-style: italic;
+        }
+        
+        .airdrop-info {
+            padding: 20px;
+            background: rgba(0, 100, 50, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 150, 0.3);
+        }
+        
+        .info-title {
+            color: #00FF00;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .info-description {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+        
+        .info-list li {
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0, 255, 150, 0.2);
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .info-list li:before {
+            content: "✓";
+            color: #00FF00;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+        
+        .info-list li:last-child {
+            border-bottom: none;
+        }
     </style>
 </head>
 <body>
@@ -561,6 +660,7 @@
             <nav class="header-nav">
                 <a href="#" class="nav-link">BUY $INF</a>
                 <a href="https://x.com/InfluenceABS" class="nav-link" target="_blank">Twitter</a>
+                <a href="#" class="nav-link" onclick="openAirdropModal()">Airdrop</a>
             </nav>
             
 
@@ -797,6 +897,47 @@
                         Influencers get their own planet, projects get exposure, and the community gets 100% of the value back.
                         This is true decentralization - power to the people.
                     </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Airdrop Modal -->
+    <div id="airdropModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAirdropModal()">&times;</span>
+            <h2 class="modal-title">Infinite Influence $INF Airdrop</h2>
+            <div class="airdrop-content">
+                <div class="airdrop-container">
+                    <div class="airdrop-stats">
+                        <h3 class="stats-title">Funds Collected</h3>
+                        <div class="stats-amount">0.113 ETH</div>
+                        <div class="stats-description">Total collected from influencer applications</div>
+                    </div>
+                    
+                    <div class="airdrop-info">
+                        <h3 class="info-title">100% Airdrop Distribution</h3>
+                        <p class="info-description">
+                            All funds collected from influencers and projects wanting their own planet in Infinite Influence $INF 
+                            will be distributed as a 100% airdrop to the community. Every penny goes back to the people.
+                        </p>
+                        
+                        <h3 class="info-title">How It Works</h3>
+                        <ul class="info-list">
+                            <li>Influencers apply for their own planet in our ecosystem</li>
+                            <li>Projects can also request their own planet</li>
+                            <li>All application fees are collected</li>
+                            <li>100% of collected funds are distributed to the community</li>
+                            <li>True decentralization - power to the people</li>
+                        </ul>
+                        
+                        <h3 class="info-title">Why This System?</h3>
+                        <p class="info-description">
+                            We're building the ultimate influencer ecosystem where everyone wins. 
+                            Influencers get their own planet, projects get exposure, and the community gets 100% of the value back.
+                            This is true decentralization - power to the people.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1286,6 +1427,7 @@
         window.onclick = function(event) {
             const sunModal = document.getElementById('sunModal');
             const roadmapModal = document.getElementById('roadmapModal');
+            const airdropModal = document.getElementById('airdropModal');
             
             if (event.target === sunModal) {
                 sunModal.style.display = "none";
@@ -1293,6 +1435,20 @@
             if (event.target === roadmapModal) {
                 roadmapModal.style.display = "none";
             }
+            if (event.target === airdropModal) {
+                airdropModal.style.display = "none";
+            }
+        }
+        
+        // Airdrop Modal Functions
+        function openAirdropModal() {
+            const modal = document.getElementById('airdropModal');
+            modal.style.display = "block";
+        }
+        
+        function closeAirdropModal() {
+            const modal = document.getElementById('airdropModal');
+            modal.style.display = "none";
         }
         
         // Close modals with escape key
@@ -1300,12 +1456,16 @@
             if (event.key === 'Escape') {
                 const sunModal = document.getElementById('sunModal');
                 const roadmapModal = document.getElementById('roadmapModal');
+                const airdropModal = document.getElementById('airdropModal');
                 
                 if (sunModal.style.display === "block") {
                     sunModal.style.display = "none";
                 }
                 if (roadmapModal.style.display === "block") {
                     roadmapModal.style.display = "none";
+                }
+                if (airdropModal.style.display === "block") {
+                    airdropModal.style.display = "none";
                 }
             }
         });
