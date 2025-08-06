@@ -28,7 +28,7 @@
             background: linear-gradient(135deg, rgba(0, 50, 0, 0.9) 0%, rgba(0, 100, 50, 0.8) 100%);
             color: white;
             margin: 5% auto;
-            padding: 30px;
+            padding: 30px 50px 30px 30px;
             border: none;
             border-radius: 10px;
             width: 80%;
@@ -39,22 +39,28 @@
             -webkit-backdrop-filter: blur(10px);
             border: 2px solid rgba(0, 255, 150, 0.6);
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            text-align: center;
         }
         
         /* Scrollbar verde para el modal */
         .modal-content::-webkit-scrollbar {
             width: 8px;
+            margin-right: 15px;
         }
         
         .modal-content::-webkit-scrollbar-track {
             background: rgba(0, 100, 50, 0.3);
             border-radius: 4px;
+            margin: 8px 0;
+            margin-left: 8px;
         }
         
         .modal-content::-webkit-scrollbar-thumb {
             background: linear-gradient(135deg, #00CC00, #00AA00);
             border-radius: 4px;
             box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+            border: 1px solid rgba(0, 255, 150, 0.3);
+            margin-left: 2px;
         }
         
         .modal-content::-webkit-scrollbar-thumb:hover {
@@ -64,17 +70,22 @@
         /* Scrollbar verde para el roadmap */
         .roadmap-content::-webkit-scrollbar {
             width: 8px;
+            margin-right: 15px;
         }
         
         .roadmap-content::-webkit-scrollbar-track {
             background: rgba(0, 100, 50, 0.3);
             border-radius: 4px;
+            margin: 8px 0;
+            margin-left: 8px;
         }
         
         .roadmap-content::-webkit-scrollbar-thumb {
             background: linear-gradient(135deg, #00CC00, #00AA00);
             border-radius: 4px;
             box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+            border: 1px solid rgba(0, 255, 150, 0.3);
+            margin-left: 2px;
         }
         
         .roadmap-content::-webkit-scrollbar-thumb:hover {
@@ -84,17 +95,22 @@
         /* Scrollbar verde para el modal de airdrop */
         .airdrop-content::-webkit-scrollbar {
             width: 8px;
+            margin-right: 15px;
         }
         
         .airdrop-content::-webkit-scrollbar-track {
             background: rgba(0, 100, 50, 0.3);
             border-radius: 4px;
+            margin: 8px 0;
+            margin-left: 8px;
         }
         
         .airdrop-content::-webkit-scrollbar-thumb {
             background: linear-gradient(135deg, #00CC00, #00AA00);
             border-radius: 4px;
             box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+            border: 1px solid rgba(0, 255, 150, 0.3);
+            margin-left: 2px;
         }
         
         .airdrop-content::-webkit-scrollbar-thumb:hover {
@@ -510,6 +526,8 @@
         .roadmap-content {
             max-height: 70vh;
             overflow-y: auto;
+            padding-right: 20px;
+            text-align: center;
         }
         
         .roadmap-phase {
@@ -571,6 +589,8 @@
         .airdrop-content {
             max-height: 70vh;
             overflow-y: auto;
+            padding-right: 20px;
+            text-align: center;
         }
         
         .airdrop-container {
@@ -681,6 +701,7 @@
                 <a href="#" class="nav-link">BUY $INF</a>
                 <a href="https://x.com/InfluenceABS" class="nav-link" target="_blank">Twitter</a>
                 <a href="#" class="nav-link" onclick="openAirdropModal()">Airdrop</a>
+                <a href="https://mint-page-lilac.vercel.app/" class="nav-link" target="_blank">NFT</a>
             </nav>
             
 
@@ -891,6 +912,14 @@
                 </div>
                 
                 <div class="roadmap-phase">
+                    <h3 class="phase-title">NFT Utility & DAO Access</h3>
+                    <p class="phase-description">
+                        NFTs will be required to access all channels and pass the verification system for Infinite DAO. 
+                        NFT holders will be able to participate in the DAO governance and have exclusive access to the ecosystem.
+                    </p>
+                </div>
+                
+                <div class="roadmap-phase">
                     <h3 class="phase-title">Infinite Roadmap</h3>
                     <ul class="phase-list">
                         <li>Twitter Account Created</li>
@@ -919,6 +948,11 @@
                         <li>Only Abstract Chain influencers can apply</li>
                         <li>Projects can also request their own planet</li>
                     </ul>
+                    <div class="apply-button-container">
+                        <button class="apply-button" onclick="window.open('https://x.com/InfluenceABS', '_blank')">
+                            Apply
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
